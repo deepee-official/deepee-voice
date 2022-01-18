@@ -1,13 +1,7 @@
 ## DA FARE
 
-• leggere guida per axios
+• risolvere invio tramite blob
 
-• installare e configurare axios
+• implementare riproduzione file audio
 
-• creare API chiamata sintetizzatore
-
-• gestire sintesi vocale e risposta con file
-
-• integrare file di risposta nel player
-
-• installare modulo npm sintetizzatore
+• implementare download file audio
