@@ -1,7 +1,9 @@
 import React, { useLayoutEffect, useState } from "react";
-import { Card, Layout, Menu, Input } from "antd";
+import { Card, Layout, Menu, Input, Button } from "antd";
+import AudioPlayer from "react-h5-audio-player";
 import "antd/dist/antd.css";
 import "./style/Layout.css";
+import "react-h5-audio-player/lib/styles.css";
 const { Header, Content, Footer } = Layout;
 
 function useWindowSize() {
@@ -25,6 +27,7 @@ function App() {
       <Layout className="layout">
         <Header>
           <div className="logo" />
+          <h2 style={{ color: "#fff" }}>DEEPEE VOICE</h2>
           <Menu
             theme="dark"
             mode="horizontal"
@@ -41,7 +44,27 @@ function App() {
           }}
         >
           <Card title="Speech synthesis" style={{ width: 300 }}>
-            <Input placeholder="Type your sentence and click play" />
+            <p>
+              Type your sentence and click "Generate", then press the play
+              button
+            </p>
+            <Input placeholder="Your sentence here" />
+            <div
+              style={{
+                paddingTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button>Generate</Button>
+            </div>
+            <AudioPlayer
+              autoPlay
+              src="http://example.com/audio.mp3"
+              onPlay={(e) => console.log("onPlay")}
+              style={{ boxShadow: "none", marginTop: 10 }}
+            />
           </Card>
         </Content>
         <Footer style={{ textAlign: "center" }}>
