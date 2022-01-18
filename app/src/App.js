@@ -4,6 +4,7 @@ import axios from "axios";
 import AudioPlayer from "react-h5-audio-player";
 import "antd/dist/antd.css";
 import "react-h5-audio-player/lib/styles.css";
+import "./App.css";
 const { Header, Content, Footer } = Layout;
 
 function useWindowSize() {
@@ -30,12 +31,22 @@ function App() {
     const data = { speechText: speechInput };
     const headers = {
       "Content-Type": "application/json",
+      Accept: "audio/mp3",
     };
 
     axios
       .post("http://localhost:3080/api/speechInput", data, { headers })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
+        const blob = new Blob([res.data], {
+          type: res.headers["audio/mp3"],
+        });
+        let url = window.URL.createObjectURL(blob);
+        console.log("Url creato");
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "tts.mp3";
+        a.click();
       })
       .catch((err) => {
         console.error("Errore nella post\n", err);
