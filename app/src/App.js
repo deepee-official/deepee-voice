@@ -18,7 +18,8 @@ function useWindowSize() {
   return size;
 }
 
-function App() {
+function App(props) {
+  const host = props.host;
   const year = new Date().getFullYear();
   const [width, height] = useWindowSize();
 
@@ -33,7 +34,7 @@ function App() {
     };
 
     axios({
-      url: "http://localhost:3080/api/speechInput", //your url
+      url: host + "/speechInput",
       method: "POST",
       headers: headers,
       responseType: "blob", // important

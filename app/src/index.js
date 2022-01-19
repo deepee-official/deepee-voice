@@ -4,9 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+//const host = "http://localhost:3080/api";
+const host = "http://deepee-voice-api:3080/api";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App host={host} />
   </React.StrictMode>,
   document.getElementById("root")
 );
