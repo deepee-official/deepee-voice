@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 //const host = "http://localhost:3080/api";
-const host = "http://deepee-voice-api:3080/api";
+const host = "https://deepee-voice-api.herokuapp.com/api";
 
 ReactDOM.render(
   <React.StrictMode>
