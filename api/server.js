@@ -29,10 +29,6 @@ async function newTTS(speechText, languageId) {
 
 app.post("/api/speechInput", async function (req, res) {
   const fileUrl = await newTTS(req.body.speechText, "it");
-  res.set({
-    "Content-Type": "audio/mpeg",
-    "Transfer-Encoding": "chunked",
-  });
   res.sendFile(fileUrl, function (err) {
     if (err) {
       console.error("Errore:\n", err);

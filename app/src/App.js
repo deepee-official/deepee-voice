@@ -1,9 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
 import { Card, Layout, Menu, Input, Button } from "antd";
 import axios from "axios";
-import AudioPlayer from "react-h5-audio-player";
 import "antd/dist/antd.css";
-import "react-h5-audio-player/lib/styles.css";
 import "./App.css";
 const { Header, Content, Footer } = Layout;
 
@@ -34,19 +32,22 @@ function App() {
       Accept: "audio/mp3",
     };
 
-    axios
-      .post("http://localhost:3080/api/speechInput", data, { headers })
+    axios({
+      url: "http://localhost:3080/api/speechInput", //your url
+      method: "POST",
+      headers: headers,
+      responseType: "blob", // important
+      data: data,
+    })
       .then((res) => {
-        console.log(res);
-        const blob = new Blob([res.data], {
-          type: res.headers["audio/mp3"],
-        });
-        let url = window.URL.createObjectURL(blob);
-        console.log("Url creato");
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "tts.mp3";
-        a.click();
+        console.log("Server: OK!");
+        const blob = new Blob([res.data]);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "file.mp3"); //or any other extension
+        document.body.appendChild(link);
+        link.click();
       })
       .catch((err) => {
         console.error("Errore nella post\n", err);
@@ -75,28 +76,31 @@ function App() {
           }}
         >
           <Card title="Speech synthesis" style={{ width: 300 }}>
-            <p>
-              <b>Input</b> your sentence and click <b>Generate</b>, then press
-              the
-              <b> Play </b>button
-            </p>
-            <Input id="speech-input" placeholder="Your sentence here" />
-            <div
-              style={{
-                paddingTop: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Button onClick={handleSpeechInput}>Generate</Button>
-            </div>
-            <AudioPlayer
-              autoPlay
-              src="http://example.com/audio.mp3"
-              onPlay={(e) => console.log("onPlay")}
-              style={{ boxShadow: "none", marginTop: 10 }}
-            />
+            <form onSubmit={handleSpeechInput}>
+              <p>
+                <b>Input</b> your sentence(s) and click <b>Generate</b>, then
+                press the
+                <b> Play </b>button
+              </p>
+              <Input
+                id="speech-input"
+                placeholder="Your sentence here"
+                maxLength={200}
+                required
+              />
+              <div
+                style={{
+                  paddingTop: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Generate
+                </Button>
+              </div>
+            </form>
           </Card>
         </Content>
         <Footer style={{ textAlign: "center" }}>
