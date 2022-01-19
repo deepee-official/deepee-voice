@@ -1,3 +1,3 @@
 ## DA FARE
 
-• implementare multilingue
+• implementare multilingue con useEffect()
